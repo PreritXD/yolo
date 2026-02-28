@@ -1,0 +1,988 @@
+!DOCTYPE html>
+<html class="dark" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Prerit Gujrati — Full Stack Developer</title>
+    <meta name="description"
+        content="Full Stack Developer & Creative Builder. I build interactive, thoughtful digital experiences." />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet" />
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#c8ff00",
+                        "bg-dark": "#080808",
+                        "bg-surface": "#111111",
+                        "bg-elevated": "#1A1A1A",
+                        "border-dark": "#1F1F1F",
+                        "border-hover": "#3A3A3A",
+                        "text-dim": "#2E2E2E",
+                        "text-muted": "#6B6B6B",
+                    },
+                    fontFamily: { sans: ["Inter", "sans-serif"] },
+                    borderRadius: { DEFAULT: "0", none: "0", sm: "0", md: "0", lg: "0", xl: "0", full: "0" },
+                },
+            },
+        }
+    </script>
+    <style>
+        * {
+            border-radius: 0 !important;
+        }
+
+        body {
+            background: #080808;
+            color: #F2F2F2;
+            font-family: 'Inter', sans-serif;
+            cursor: none;
+            overflow-x: hidden;
+        }
+
+        :root {
+            --accent: #c8ff00;
+            --bg-dark: #080808;
+            --bg-surface: #111111;
+            --bg-elevated: #1A1A1A;
+            --border: #1F1F1F;
+            --border-hover: #3A3A3A;
+            --text-muted: #6B6B6B;
+            --text-dim: #2E2E2E;
+        }
+
+        /* Custom Cursor */
+        #cursor {
+            width: 12px;
+            height: 12px;
+            background: var(--accent);
+            border-radius: 50% !important;
+            position: fixed;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            z-index: 9999;
+            transition: transform 0.15s ease, width 0.2s ease, height 0.2s ease;
+        }
+
+        body:has(a:hover) #cursor,
+        body:has(button:hover) #cursor {
+            width: 40px;
+            height: 40px;
+            mix-blend-mode: difference;
+        }
+
+        /* Page transitions */
+        .page {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Watermark text */
+        .watermark {
+            -webkit-text-stroke: 1px rgba(200, 255, 0, 0.06);
+            color: transparent;
+            user-select: none;
+        }
+
+        /* Nav underline hover */
+        .nav-link {
+            position: relative;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after,
+        .nav-link.active-link::after {
+            width: 100%;
+        }
+
+        /* Nav scroll effect */
+        header {
+            transition: background 0.3s ease, backdrop-filter 0.3s ease;
+        }
+
+        header.scrolled {
+            background: rgba(8, 8, 8, 0.9) !important;
+            backdrop-filter: blur(20px);
+        }
+
+        /* Section divider */
+        .divider {
+            border: none;
+            border-top: 1px solid var(--border);
+            margin: 0;
+        }
+
+        /* Card hover */
+        .card-hover {
+            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.5s ease, border-color 0.3s ease;
+        }
+
+        .card-hover:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 0 40px rgba(200, 255, 0, 0.12);
+            border-color: var(--border-hover) !important;
+        }
+
+        /* Scroll reveal */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Timeline */
+        .timeline-dot {
+            width: 9px;
+            height: 9px;
+            background: var(--accent);
+            position: absolute;
+            left: -5px;
+            top: 4px;
+        }
+
+        /* Availability pulse */
+        .pulse-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--accent);
+            animation: pulse 2s infinite;
+            border-radius: 50% !important;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+
+            50% {
+                opacity: 0.6;
+                transform: scale(1.3);
+            }
+        }
+
+        /* Process dashed connector */
+        .process-grid {
+            position: relative;
+        }
+
+        .process-grid::before {
+            content: '';
+            position: absolute;
+            top: 24px;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            border-top: 1px dashed var(--border-hover);
+            z-index: 0;
+            display: none;
+        }
+
+        @media(min-width:768px) {
+            .process-grid::before {
+                display: block;
+            }
+        }
+
+        /* Hero nav block hover underline */
+        .nav-block {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-block::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: width 0.4s ease;
+        }
+
+        .nav-block:hover::after {
+            width: 100%;
+        }
+
+        /* Tag pills */
+        .tag {
+            background: var(--bg-elevated);
+            border: 1px solid var(--border);
+            color: var(--text-muted);
+            font-size: 11px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            padding: 6px 14px;
+            transition: border-color 0.2s, color 0.2s;
+        }
+
+        .tag:hover {
+            border-color: var(--accent);
+            color: #F2F2F2;
+        }
+
+        /* Ghost link CTA */
+        .ghost-link {
+            color: var(--accent);
+            text-decoration: none;
+            position: relative;
+        }
+
+        .ghost-link::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: width 0.3s ease;
+        }
+
+        .ghost-link:hover::after {
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Custom Cursor -->
+    <div id="cursor"></div>
+    <!-- ═══════════════════════════════════════ NAVBAR ═══════════════════════════════════════ -->
+    <header id="navbar"
+        class="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-10 py-5 border-b border-border-dark bg-bg-dark">
+        <a href="#home"
+            class="text-sm font-bold uppercase tracking-widest text-white hover:text-primary transition-colors"
+            onclick="navigate('home')">PRERIT GUJRATI</a>
+        <nav class="hidden md:flex items-center gap-10">
+            <a href="#projects" onclick="navigate('projects')"
+                class="nav-link text-sm font-medium text-text-muted hover:text-white transition-colors"
+                id="nav-projects">Projects</a>
+            <a href="#services" onclick="navigate('services')"
+                class="nav-link text-sm font-medium text-text-muted hover:text-white transition-colors"
+                id="nav-services">Services</a>
+            <a href="#social" onclick="navigate('social')"
+                class="nav-link text-sm font-medium text-text-muted hover:text-white transition-colors"
+                id="nav-social">Social</a>
+        </nav>
+        <div class="flex items-center gap-2">
+            <span class="pulse-dot"></span>
+            <span class="text-primary text-xs font-medium uppercase tracking-widest">Available for work</span>
+        </div>
+    </header>
+    <!-- ═══════════════════════════════════════ PAGE: HOME ═══════════════════════════════════════ -->
+    <div id="page-home" class="page active pt-20">
+        <!-- Hero -->
+        <section class="relative min-h-screen flex flex-col justify-center pl-[10vw] pr-12 overflow-hidden">
+            <div class="absolute inset-0 flex items-center justify-center pointer-events-none overflow-hidden">
+                <span class="watermark font-black text-[22vw] leading-none select-none whitespace-nowrap">BUILDER</span>
+            </div>
+            <div class="relative z-10 max-w-3xl">
+                <p class="text-xs font-medium uppercase tracking-[0.15em] text-text-muted mb-6">[ Full Stack Developer ·
+                    2024 → Now ]</p>
+                <h1 class="font-black leading-none tracking-[-0.04em] uppercase text-white mb-8"
+                    style="font-size: clamp(64px,9vw,120px);">
+                    Prerit<br><span class="text-primary">Gujrati.</span>
+                </h1>
+                <p
+                    class="text-text-muted text-lg leading-[1.7] mb-10 max-w-[560px] border-l-2 border-border-hover pl-6">
+                </p>
+                <div class="flex flex-wrap gap-4">
+                    <button onclick="navigate('projects')"
+                        class="bg-primary text-bg-dark text-sm font-semibold uppercase tracking-[0.08em] px-7 py-[14px] hover:bg-[#aadd00] transition-colors flex items-center gap-2">
+                        View Projects <span class="material-symbols-outlined text-base">arrow_forward</span>
+                    </button>
+                    <button onclick="navigate('services')"
+                        class="bg-transparent border border-border-hover text-white text-sm font-semibold uppercase tracking-[0.08em] px-7 py-[14px] hover:border-primary hover:text-primary transition-colors">
+                        My Services
+                    </button>
+                </div>
+            </div>
+            <!-- Bottom nav strip -->
+            <div class="absolute bottom-0 left-0 right-0 grid grid-cols-3 border-t border-border-dark">
+                <button onclick="navigate('projects')"
+                    class="nav-block text-left px-10 py-7 border-r border-border-dark hover:bg-bg-surface transition-colors group">
+                    <span class="block text-text-muted text-xs uppercase tracking-widest mb-1">01</span>
+                    <span
+                        class="text-sm font-semibold uppercase tracking-wider group-hover:text-primary transition-colors">Projects</span>
+                </button>
+                <button onclick="navigate('services')"
+                    class="nav-block text-left px-10 py-7 border-r border-border-dark hover:bg-bg-surface transition-colors group">
+                    <span class="block text-text-muted text-xs uppercase tracking-widest mb-1">02</span>
+                    <span
+                        class="text-sm font-semibold uppercase tracking-wider group-hover:text-primary transition-colors">Services</span>
+                </button>
+                <button onclick="navigate('social')"
+                    class="nav-block text-left px-10 py-7 hover:bg-bg-surface transition-colors group">
+                    <span class="block text-text-muted text-xs uppercase tracking-widest mb-1">03</span>
+                    <span
+                        class="text-sm font-semibold uppercase tracking-wider group-hover:text-primary transition-colors">Social</span>
+                </button>
+            </div>
+        </section>
+        <!-- Stats Bar -->
+        <section class="bg-bg-surface border-y border-border-dark py-8">
+            <div class="max-w-[1280px] mx-auto px-12 flex items-center justify-center gap-0">
+                <div class="flex-1 text-center">
+                    <span class="text-xs uppercase tracking-[0.12em] text-text-muted">03+ Projects Built</span>
+                </div>
+                <div class="w-px h-8 bg-border-hover"></div>
+                <div class="flex-1 text-center">
+                    <span class="text-xs uppercase tracking-[0.12em] text-text-muted">02 Service Tracks</span>
+                </div>
+                <div class="w-px h-8 bg-border-hover"></div>
+                <div class="flex-1 text-center">
+                    <span class="text-xs uppercase tracking-[0.12em] text-text-muted">∞ Things Learning</span>
+                </div>
+            </div>
+        </section>
+        <hr class="divider" />
+        <!-- Journey Timeline -->
+        <section class="max-w-[1280px] mx-auto px-12 py-24 reveal">
+            <p class="text-text-muted text-xs uppercase tracking-[0.15em] mb-16">01 — My Journey</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-20">
+                <div>
+                    <h2 class="font-bold text-white leading-none tracking-[-0.03em]"
+                        style="font-size:clamp(40px,5vw,56px);">
+                        From Curiosity<br>to Code.
+                    </h2>
+                </div>
+                <div class="relative pl-8 border-l border-border-dark flex flex-col gap-12">
+                    <div class="relative">
+                        <div class="timeline-dot"></div>
+                        <span class="text-primary text-xs uppercase tracking-widest font-medium">2024 — Now</span>
+                        <h3 class="text-white font-bold text-xl mt-2 mb-2">Curiosity Turned Into Capability</h3>
+                        <p class="text-text-muted text-sm leading-[1.7]">From building simple static pages to developing
+                            interactive applications with clean architecture and thoughtful user experience. Balancing
+                            school and coding, I've consistently invested time into improving both my technical depth
+                            and creative vision — learning new languages, building real projects, refining my design
+                            sense, and thinking like a developer who solves problems, not just writes code. From 2024 to
+                            now, I've transformed curiosity into capability. And this is only the foundation of what I'm
+                            building next.</p>
+                    </div>
+                    <div class="relative">
+                        <div class="timeline-dot" style="background:var(--border-hover)"></div>
+                        <span class="text-text-muted text-xs uppercase tracking-widest">Mid 2024</span>
+                        <h3 class="text-white font-bold text-xl mt-2 mb-2">Going Beyond the Frontend</h3>
+                        <p class="text-text-muted text-sm leading-[1.7]">I didn't stop at just frontend basics. I
+                            expanded into modern development by exploring React and building structured, component-based
+                            applications. Along the way, I learned programming fundamentals through Python and Java —
+                            which strengthened my problem-solving skills and helped me think beyond just designing
+                            interfaces. I explored how APIs work, understood backend concepts, and experimented with
+                            building full-stack projects. Each language gave a different perspective — Python's
+                            simplicity, Java's structured approach, JavaScript's flexibility.</p>
+                    </div>
+                    <div class="relative">
+                        <div class="timeline-dot" style="background:var(--border-hover)"></div>
+                        <span class="text-text-muted text-xs uppercase tracking-widest">Early 2024</span>
+                        <h3 class="text-white font-bold text-xl mt-2 mb-2">The First Line of Code</h3>
+                        <p class="text-text-muted text-sm leading-[1.7]">It started with a question: how are websites
+                            actually built? That question led to HTML and CSS — learning structure and design. Soon
+                            after, I moved into JavaScript to make projects interactive and dynamic. What started as
+                            casual exploration quickly evolved into a serious passion for creating digital experiences.
+                            That initial spark hasn't left since.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <hr class="divider" />
+        <!-- Nav Teaser Cards -->
+        <section class="max-w-[1280px] mx-auto px-12 py-16 reveal">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-px bg-border-dark">
+                <button onclick="navigate('projects')"
+                    class="card-hover relative bg-bg-surface border border-border-dark p-12 flex flex-col justify-between h-[360px] text-left group">
+                    <span class="text-text-dim font-black text-[80px] leading-none select-none">01</span>
+                    <div>
+                        <h3 class="text-white font-bold mb-4 group-hover:text-primary transition-colors"
+                            style="font-size:clamp(28px,3vw,40px);">Projects</h3>
+                        <span
+                            class="material-symbols-outlined text-text-muted text-3xl group-hover:translate-x-2 group-hover:text-primary transition-all">arrow_forward</span>
+                    </div>
+                </button>
+                <button onclick="navigate('services')"
+                    class="card-hover relative bg-bg-surface border border-border-dark p-12 flex flex-col justify-between h-[360px] text-left group">
+                    <span class="text-text-dim font-black text-[80px] leading-none select-none">02</span>
+                    <div>
+                        <h3 class="text-white font-bold mb-4 group-hover:text-primary transition-colors"
+                            style="font-size:clamp(28px,3vw,40px);">Services</h3>
+                        <span
+                            class="material-symbols-outlined text-text-muted text-3xl group-hover:translate-x-2 group-hover:text-primary transition-all">arrow_forward</span>
+                    </div>
+                </button>
+                <button onclick="navigate('social')"
+                    class="card-hover relative bg-bg-surface border border-border-dark p-12 flex flex-col justify-between h-[360px] text-left group">
+                    <span class="text-text-dim font-black text-[80px] leading-none select-none">03</span>
+                    <div>
+                        <h3 class="text-white font-bold mb-4 group-hover:text-primary transition-colors"
+                            style="font-size:clamp(28px,3vw,40px);">Social</h3>
+                        <span
+                            class="material-symbols-outlined text-text-muted text-3xl group-hover:translate-x-2 group-hover:text-primary transition-all">arrow_forward</span>
+                    </div>
+                </button>
+            </div>
+        </section>
+        <!-- Footer -->
+        <footer
+            class="border-t border-border-dark px-12 py-10 flex justify-between items-center text-text-muted text-xs uppercase tracking-widest">
+            <span>PRERIT GUJRATI © 2025</span>
+            <div class="flex gap-8">
+                <a href="https://github.com/PreritXD" target="_blank" rel="noopener noreferrer"
+                    class="hover:text-primary transition-colors">GitHub</a>
+                <a href="https://www.instagram.com/preritgujrati/" target="_blank" rel="noopener noreferrer"
+                    class="hover:text-primary transition-colors">Instagram</a>
+            </div>
+        </footer>
+    </div>
+    <!-- ═══════════════════════════════════════ PAGE: PROJECTS ═══════════════════════════════════════ -->
+    <div id="page-projects" class="page pt-24">
+        <div class="max-w-[1280px] mx-auto px-12 py-16">
+            <!-- Header -->
+            <div class="mb-20 reveal">
+                <p class="text-primary text-xs font-bold tracking-[0.2em] uppercase mb-5">02 — Projects</p>
+                <h1 class="font-black text-white leading-none tracking-[-0.04em] mb-6"
+                    style="font-size:clamp(56px,7vw,96px);">Work that<br>Speaks.</h1>
+                <p class="text-text-muted text-lg max-w-xl">A curated selection of builds — technical depth meets
+                    creative intent.</p>
+                <hr class="divider mt-10" />
+            </div>
+            <!-- Project 01 -->
+            <article class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center pb-20 mb-4 reveal">
+                <div class="lg:col-span-7 overflow-hidden">
+                    <div class="aspect-video overflow-hidden group">
+                        <img src="https://cdn.dribbble.com/userupload/15440250/file/original-49a0737d9084b38a4db1926dea60c323.jpg"
+                            alt="E-Commerce Platform"
+                            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                    </div>
+                </div>
+                <div class="lg:col-span-5 flex flex-col gap-5">
+                    <span class="text-primary font-mono text-xl">01.</span>
+                    <h2 class="text-white font-bold" style="font-size:clamp(24px,3vw,36px);">E-Commerce Platform</h2>
+                    <p class="text-text-muted leading-[1.7]">A full-stack solution with React and Node.js, featuring
+                        seamless payment integration and real-time inventory management. Handles 10k+ concurrent users.
+                    </p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="tag">React</span><span class="tag">Node.js</span><span
+                            class="tag">Stripe</span><span class="tag">MongoDB</span>
+                    </div>
+                    <a href="https://preritxd.github.io/BEAN-HAVEN/" target="_blank" rel="noopener noreferrer"
+                        class="ghost-link text-sm font-bold w-fit flex items-center gap-1">View Project <span
+                            class="material-symbols-outlined text-base">arrow_forward</span></a>
+                </div>
+            </article>
+            <hr class="divider mb-20" />
+            <!-- Project 02 (reversed) -->
+            <article class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center pb-20 mb-4 reveal">
+                <div class="lg:col-span-5 flex flex-col gap-5 order-2 lg:order-1">
+                    <span class="text-primary font-mono text-xl">02.</span>
+                    <h2 class="text-white font-bold" style="font-size:clamp(24px,3vw,36px);">Portfolio V1</h2>
+                    <p class="text-text-muted leading-[1.7]">Minimalist personal website focusing on typography and
+                        motion, using WebGL for immersive background effects. A digital identity that feels technical
+                        and artistic.</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="tag">Vue.js</span><span class="tag">Three.js</span><span
+                            class="tag">GSAP</span><span class="tag">WebGL</span>
+                    </div>
+                    <a href="https://kinetic-type-space.vercel.app/" target="_blank" rel="noopener noreferrer"
+                        class="ghost-link text-sm font-bold w-fit flex items-center gap-1">View Project <span
+                            class="material-symbols-outlined text-base">arrow_forward</span></a>
+                </div>
+                <div class="lg:col-span-7 overflow-hidden order-1 lg:order-2">
+                    <div class="aspect-video overflow-hidden group">
+                        <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBn8BpHry3_cJ7M2yPkTd6k6vlkzUzP7h9lq1_u2F0rXAflDsR20vvcTFD4OBml1Inxe6_LHBzlFGsG6QXlCwdox0usH23_tkzGCUKZ-BTqhznmpoByiUGNSqKxa8z-KvCodsbIPGpG9Wm6QvE9-rCzqDVT6igGI3ayw_U3ILI-mOZsYRFnm2cyof1qzVOyzxpflCQschU0lrDI8bCMHJbeMu_TdhrI7wiA9NUuXpDGrHuSwrmeGNVBymJg3JTbhw4eSWIDwp5y9Ys2"
+                            alt="Portfolio V1"
+                            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                    </div>
+                </div>
+            </article>
+            <hr class="divider mb-20" />
+            <!-- Project 03 -->
+            <article class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center pb-20 mb-4 reveal">
+                <div class="lg:col-span-7 overflow-hidden">
+                    <div class="aspect-video overflow-hidden group">
+                        <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuD9wH9v8s662j6c0Tg0xB9bl-amahhPviEvNDhj1c1wdSQui9-bEY7MCFGQGewaFxtcvoFpSUtKZPryz3EHmpmDL6Mjd26_FM9q9gNIA-GVJaKu6qWx8SvlNpaCmRdvdkgg8W2y70QIJcC5A5WPLAy2pXOg4rUWIWEfmygNlWRu2FJkoFe_RdwBI9pOalUmS3u_nZukYB7vF0YfVTnr26JnC8g2fK8-R3wGwFwBHcNm2n2CuKIpxlxL3Yp4AHl7IFTN8pXEVY4OgWah"
+                            alt="Fintech Dashboard"
+                            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                    </div>
+                </div>
+                <div class="lg:col-span-5 flex flex-col gap-5">
+                    <span class="text-primary font-mono text-xl">03.</span>
+                    <h2 class="text-white font-bold" style="font-size:clamp(24px,3vw,36px);">Fintech Dashboard</h2>
+                    <p class="text-text-muted leading-[1.7]">High-performance data visualization dashboard for financial
+                        analysts. Complex charting with socket-based live data updates for real-time market tracking.
+                    </p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="tag">Next.js</span><span class="tag">D3.js</span><span
+                            class="tag">TypeScript</span><span class="tag">WebSockets</span>
+                    </div>
+                    <a href="https://preritxd.github.io/neomorph/" target="_blank" rel="noopener noreferrer"
+                        class="ghost-link text-sm font-bold w-fit flex items-center gap-1">View Project <span
+                            class="material-symbols-outlined text-base">arrow_forward</span></a>
+                </div>
+            </article>
+            <hr class="divider mb-20" />
+            <!-- Project 04 (reversed) -->
+            <article class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center reveal">
+                <div class="lg:col-span-5 flex flex-col gap-5 order-2 lg:order-1">
+                    <span class="text-primary font-mono text-xl">04.</span>
+                    <h2 class="text-white font-bold" style="font-size:clamp(24px,3vw,36px);">Gesture Controlled
+                        Particles</h2>
+                    <p class="text-text-muted leading-[1.7]">Experimental Gesture Controlled Holographic Particles. Made using Python, TypeScript and React.
+                        
+                    </p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="tag">Python</span><span class="tag">FastAPI</span><span
+                            class="tag">React</span><span class="tag">Tailwind</span>
+                    </div>
+                    <a href="https://preritxd.github.io/hand-particles/" target="_blank" rel="noopener noreferrer"
+                        class="ghost-link text-sm font-bold w-fit flex items-center gap-1">View Project <span
+                            class="material-symbols-outlined text-base">arrow_forward</span></a>
+                </div>
+                <div class="lg:col-span-7 overflow-hidden order-1 lg:order-2">
+                    <div class="aspect-video overflow-hidden group">
+                        <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBQd1attYuNgU0zCTlTJLiMw3b3WlOO2cR73_pLhqyuF30GgQIC5GY3qr5Oy7xh81DXpVgtZAG9Sz5D_FOjFUIcDGr1ka4m6j6_kO2sDpi0Pc1Nw8LGPHnveZsRxqnL5RUzTwSry2FJnU0Jhj0egkwqIuixNh14WqWRKEg-RmM6JS5XfYA_asjKi1vhVYSAZ36qzB1Mtukoes0W7E6OrZp5XFTSzmuv7_9jrFr_HSEJq8mO_R7SLw8m8wC90XCyii2P7IWfzRLqh7UA"
+                            alt="Gesture Controlled hand-particles"
+                            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                    </div>
+                </div>
+            </article>
+        </div>
+        <!-- Footer -->
+        <footer
+            class="border-t border-border-dark px-12 py-10 flex justify-between items-center text-text-muted text-xs uppercase tracking-widest mt-8">
+            <span>PRERIT GUJRATI © 2025</span>
+            <div class="flex gap-8">
+                <a href="https://github.com/PreritXD" target="_blank" rel="noopener noreferrer"
+                    class="hover:text-primary transition-colors">GitHub</a>
+                <a href="https://www.instagram.com/preritgujrati/" target="_blank" rel="noopener noreferrer"
+                    class="hover:text-primary transition-colors">Instagram</a>
+            </div>
+        </footer>
+    </div>
+    <!-- ═══════════════════════════════════════ PAGE: SERVICES ═══════════════════════════════════════ -->
+    <div id="page-services" class="page pt-24">
+        <div class="max-w-[1280px] mx-auto px-12 py-16 flex flex-col gap-20">
+            <!-- Header -->
+            <div class="reveal">
+                <p class="text-primary text-xs font-bold tracking-[0.2em] uppercase mb-5">03 — Services</p>
+                <h1 class="font-black text-white leading-none tracking-[-0.04em]"
+                    style="font-size:clamp(56px,7vw,96px);">What I<br>Build For You.</h1>
+            </div>
+            <!-- Primary Service: Full Stack -->
+            <section class="reveal">
+                <div class="flex items-center justify-between mb-8 pb-4 border-b border-border-dark">
+                    <h2 class="text-white text-2xl font-bold uppercase flex items-center gap-3">
+                        <span
+                            class="text-primary text-xs font-medium uppercase tracking-widest border border-primary px-2 py-1">PRIMARY</span>
+                        Full Stack Development
+                    </h2>
+                    <span class="text-text-muted text-xs font-mono hidden sm:block">/// WEB APPLICATIONS</span>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <!-- Tier 1: Portfolio & Landing Pages -->
+                    <div class="card-hover flex flex-col gap-6 border border-border-dark bg-bg-surface p-8 group">
+                        <div>
+                            <h3 class="text-text-muted text-xs font-bold uppercase tracking-wider mb-3">Portfolio &
+                                Landing Pages</h3>
+                            <div class="flex items-baseline gap-1">
+                                <span class="text-white text-3xl font-black">$50–$70</span>
+                            </div>
+                            <p class="text-primary text-xs font-medium mt-1">₹2,599 – ₹4,599</p>
+                            <p class="text-text-muted text-xs mt-2">A sharp, fast, and beautifully crafted personal
+                                portfolio or landing page that makes a lasting first impression.</p>
+                        </div>
+                        <hr class="divider" />
+                        <ul class="flex flex-col gap-3 flex-1 text-sm text-white">
+                            <li class="flex gap-3"><span class="text-primary font-bold">✓</span>Custom Design & Layout
+                            </li>
+                            <li class="flex gap-3"><span class="text-primary font-bold">✓</span>Fully Responsive</li>
+                            <li class="flex gap-3"><span class="text-primary font-bold">✓</span>Smooth Animations</li>
+                            <li class="flex gap-3"><span class="text-primary font-bold">✓</span>SEO Optimized</li>
+                            <li class="flex gap-3"><span class="text-primary font-bold">✓</span>Fast Load Times</li>
+                        </ul>
+                        <a href="https://mail.google.com/mail/?view=cm&fs=1&to=workwithprerit1@gmail.com"
+                            target="_blank" rel="noopener noreferrer"
+                            class="w-full py-3 border border-primary text-primary hover:bg-primary hover:text-bg-dark text-xs font-bold uppercase tracking-widest transition-all text-center block">Contact
+                            me</a>
+                    </div>
+                    <!-- Tier 2: E-commerce (Best Value) -->
+                    <div class="card-hover flex flex-col gap-6 border-2 border-primary bg-bg-surface p-8 relative">
+                        <div
+                            class="absolute -top-3 left-1/2 -translate-x-1/2 bg-primary px-4 py-1 text-[10px] font-black uppercase text-bg-dark tracking-widest">
+                            Most Popular</div>
+                        <div>
+                            <h3 class="text-white text-xs font-bold uppercase tracking-wider mb-3">E-Commerce Website
+                            </h3>
+                            <div class="flex items-baseline gap-1">
+                                <span class="text-white text-3xl font-black">$100–$120</span>
+                            </div>
+                            <p class="text-primary text-xs font-medium mt-1">₹8,499 – ₹10,499</p>
+                            <p class="text-text-muted text-xs mt-2">A complete, production-ready online store with
+                                product listings, cart, payments, and a clean admin experience.</p>
+                        </div>
+                        <hr class="divider" />
+                        <ul class="flex flex-col gap-3 flex-1 text-sm text-white">
+                            <li class="flex gap-3"><span class="text-primary font-bold">✓</span><strong>Everything in
+                                    Portfolio</strong></li>
+                            <li class="flex gap-3"><span class="text-primary font-bold">✓</span>Product Catalogue & Cart
+                            </li>
+                            <li class="flex gap-3"><span class="text-primary font-bold">✓</span>Payment Integration</li>
+                            <li class="flex gap-3"><span class="text-primary font-bold">✓</span>Admin Dashboard</li>
+                            <li class="flex gap-3"><span class="text-primary font-bold">✓</span>Order Management</li>
+                        </ul>
+                        <a href="https://mail.google.com/mail/?view=cm&fs=1&to=workwithprerit1@gmail.com"
+                            target="_blank" rel="noopener noreferrer"
+                            class="w-full py-3 bg-primary text-bg-dark hover:bg-white text-xs font-bold uppercase tracking-widest transition-all text-center block">Contact
+                            me</a>
+                    </div>
+                    <!-- Tier 3: Full Stack Apps -->
+                    <div class="card-hover flex flex-col gap-6 border border-border-dark bg-bg-surface p-8 group">
+                        <div>
+                            <h3 class="text-text-muted text-xs font-bold uppercase tracking-wider mb-3">Full Stack Apps
+                            </h3>
+                            <div class="flex items-baseline gap-1">
+                                <span class="text-white text-3xl font-black">$180–$200</span>
+                            </div>
+                            <p class="text-primary text-xs font-medium mt-1">₹14,999 – ₹16,999</p>
+                            <p class="text-text-muted text-xs mt-2">End-to-end custom web applications with a full
+                                backend, database, authentication, and production deployment.</p>
+                        </div>
+                        <hr class="divider" />
+                        <ul class="flex flex-col gap-3 flex-1 text-sm text-white">
+                            <li class="flex gap-3"><span class="text-primary font-bold">✓</span><strong>Everything in
+                                    E-Commerce</strong></li>
+                            <li class="flex gap-3"><span class="text-primary font-bold">✓</span>Custom Backend & APIs
+                            </li>
+                            <li class="flex gap-3"><span class="text-primary font-bold">✓</span>Database Architecture
+                            </li>
+                            <li class="flex gap-3"><span class="text-primary font-bold">✓</span>Auth & User Roles</li>
+                            <li class="flex gap-3"><span class="text-primary font-bold">✓</span>Production Deployment
+                            </li>
+                        </ul>
+                        <a href="https://mail.google.com/mail/?view=cm&fs=1&to=workwithprerit1@gmail.com"
+                            target="_blank" rel="noopener noreferrer"
+                            class="w-full py-3 border border-primary text-primary hover:bg-primary hover:text-bg-dark text-xs font-bold uppercase tracking-widest transition-all text-center block">Contact
+                            me</a>
+                    </div>
+                </div>
+            </section>
+            <!-- Secondary Service: AI/ML -->
+            <section class="reveal">
+                <div class="flex items-center justify-between mb-8 pb-4 border-b border-border-dark">
+                    <h2 class="text-white text-2xl font-bold uppercase flex items-center gap-3">
+                        <span
+                            class="text-text-muted text-xs font-medium uppercase tracking-widest border border-border-hover px-2 py-1">SECONDARY</span>
+                        Coding / AI & ML Projects
+                    </h2>
+                    <span class="text-text-muted text-xs font-mono hidden sm:block">/// INTELLIGENT SOLUTIONS</span>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="card-hover flex flex-col gap-6 border border-border-dark bg-bg-surface p-8">
+                        <div>
+                            <h3 class="text-text-muted text-xs font-bold uppercase tracking-wider mb-3">AI Integration
+                            </h3>
+                            <div class="flex items-baseline gap-1">
+                                <span class="text-white text-4xl font-black">$3k</span>
+                                <span class="text-text-muted text-sm">/starting</span>
+                            </div>
+                        </div>
+                        <hr class="divider" />
+                        <ul class="flex flex-col gap-3 flex-1 text-sm text-white">
+                            <li class="flex gap-3"><span class="text-primary font-bold">✓</span>OpenAI / Anthropic API
+                                Integration</li>
+                            <li class="flex gap-3"><span class="text-primary font-bold">✓</span>Custom Chatbots &
+                                Assistants</li>
+                            <li class="flex gap-3"><span class="text-primary font-bold">✓</span>Prompt Engineering</li>
+                        </ul>
+                        <a href="https://mail.google.com/mail/?view=cm&fs=1&to=workwithprerit1@gmail.com"
+                            target="_blank" rel="noopener noreferrer"
+                            class="w-full py-3 border border-border-hover text-white hover:border-primary hover:text-primary text-xs font-bold uppercase tracking-widest transition-all text-center block">Contact
+                            me</a>
+                    </div>
+                    <div class="card-hover flex flex-col gap-6 border border-border-dark bg-bg-surface p-8">
+                        <div>
+                            <h3 class="text-text-muted text-xs font-bold uppercase tracking-wider mb-3">Custom Models
+                            </h3>
+                            <div class="flex items-baseline gap-1">
+                                <span class="text-white text-4xl font-black">$8k</span>
+                                <span class="text-text-muted text-sm">/starting</span>
+                            </div>
+                        </div>
+                        <hr class="divider" />
+                        <ul class="flex flex-col gap-3 flex-1 text-sm text-white">
+                            <li class="flex gap-3"><span class="text-primary font-bold">✓</span>Data Preprocessing &
+                                Cleaning</li>
+                            <li class="flex gap-3"><span class="text-primary font-bold">✓</span>Fine-Tuning LLMs (Llama,
+                                Mistral)</li>
+                            <li class="flex gap-3"><span class="text-primary font-bold">✓</span>Predictive Analytics
+                                Models</li>
+                        </ul>
+                        <a href="https://mail.google.com/mail/?view=cm&fs=1&to=workwithprerit1@gmail.com"
+                            target="_blank" rel="noopener noreferrer"
+                            class="w-full py-3 border border-border-hover text-white hover:border-primary hover:text-primary text-xs font-bold uppercase tracking-widest transition-all text-center block">Contact
+                            me</a>
+                    </div>
+                    <div class="card-hover flex flex-col gap-6 border border-border-dark bg-bg-surface p-8">
+                        <div>
+                            <h3 class="text-text-muted text-xs font-bold uppercase tracking-wider mb-3">Consultation
+                            </h3>
+                            <div class="flex items-baseline gap-1">
+                                <span class="text-white text-4xl font-black">$250</span>
+                                <span class="text-text-muted text-sm">/hour</span>
+                            </div>
+                        </div>
+                        <hr class="divider" />
+                        <ul class="flex flex-col gap-3 flex-1 text-sm text-white">
+                            <li class="flex gap-3"><span class="text-primary font-bold">✓</span>Feasibility Assessment
+                            </li>
+                            <li class="flex gap-3"><span class="text-primary font-bold">✓</span>Tech Stack Selection
+                            </li>
+                            <li class="flex gap-3"><span class="text-primary font-bold">✓</span>AI Strategy Roadmap</li>
+                        </ul>
+                        <a href="https://mail.google.com/mail/?view=cm&fs=1&to=workwithprerit1@gmail.com"
+                            target="_blank" rel="noopener noreferrer"
+                            class="w-full py-3 border border-border-hover text-white hover:border-primary hover:text-primary text-xs font-bold uppercase tracking-widest transition-all text-center block">Contact
+                            me</a>
+                    </div>
+                </div>
+            </section>
+            <!-- Process Strip -->
+            <section class="border-t border-border-dark pt-16 reveal">
+                <div class="flex items-center justify-between mb-12">
+                    <h2 class="text-white text-2xl font-bold uppercase">How We Work</h2>
+                    <span class="text-primary text-xs font-mono">/// THE PROCESS</span>
+                </div>
+                <div class="process-grid grid grid-cols-1 md:grid-cols-4 gap-8">
+                    <div class="relative z-10 flex flex-col gap-4">
+                        <div
+                            class="w-12 h-12 bg-bg-surface border border-primary flex items-center justify-center text-primary font-black text-xl">
+                            01</div>
+                        <h3 class="text-white font-bold uppercase">Discovery</h3>
+                        <p class="text-text-muted text-sm leading-relaxed">Define scope, analyze requirements, and set
+                            clear objectives for success.</p>
+                    </div>
+                    <div class="relative z-10 flex flex-col gap-4">
+                        <div
+                            class="w-12 h-12 bg-bg-surface border border-border-hover flex items-center justify-center text-white font-black text-xl">
+                            02</div>
+                        <h3 class="text-white font-bold uppercase">Design & Architect</h3>
+                        <p class="text-text-muted text-sm leading-relaxed">Wireframing, high-fidelity UI design, and
+                            database schema planning.</p>
+                    </div>
+                    <div class="relative z-10 flex flex-col gap-4">
+                        <div
+                            class="w-12 h-12 bg-bg-surface border border-border-hover flex items-center justify-center text-white font-black text-xl">
+                            03</div>
+                        <h3 class="text-white font-bold uppercase">Develop & Iterate</h3>
+                        <p class="text-text-muted text-sm leading-relaxed">Sprint-based development with regular updates
+                            and feedback loops.</p>
+                    </div>
+                    <div class="relative z-10 flex flex-col gap-4">
+                        <div
+                            class="w-12 h-12 bg-bg-surface border border-border-hover flex items-center justify-center text-white font-black text-xl">
+                            04</div>
+                        <h3 class="text-white font-bold uppercase">Launch & Scale</h3>
+                        <p class="text-text-muted text-sm leading-relaxed">Deployment to production, monitoring, and
+                            future roadmap planning.</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+        <!-- Footer -->
+        <footer
+            class="border-t border-border-dark px-12 py-10 flex justify-between items-center text-text-muted text-xs uppercase tracking-widest mt-8">
+            <span>PRERIT GUJRATI © 2025</span>
+            <div class="flex gap-8">
+                <a href="https://github.com/PreritXD" target="_blank" rel="noopener noreferrer"
+                    class="hover:text-primary transition-colors">GitHub</a>
+                <a href="https://www.instagram.com/preritgujrati/" target="_blank" rel="noopener noreferrer"
+                    class="hover:text-primary transition-colors">Instagram</a>
+            </div>
+        </footer>
+    </div>
+    <!-- ═══════════════════════════════════════ PAGE: SOCIAL ═══════════════════════════════════════ -->
+    <div id="page-social" class="page pt-24">
+        <div class="max-w-[1280px] mx-auto px-12 py-16 flex flex-col gap-16">
+            <!-- Header -->
+            <div
+                class="flex flex-col md:flex-row justify-between items-start md:items-end gap-8 border-b border-border-dark pb-12 reveal">
+                <div>
+                    <p class="text-primary text-xs font-bold tracking-[0.2em] uppercase mb-5">04 — Connect</p>
+                    <h1 class="font-black text-white leading-none tracking-[-0.04em] uppercase"
+                        style="font-size:clamp(56px,7vw,96px);">Let's Stay<br>Connected.</h1>
+                </div>
+                <p class="text-text-muted text-lg max-w-sm leading-[1.7]">Follow my latest work, daily updates, and
+                    behind-the-scenes of my creative process. Or just say hi — I'm always open to new conversations.</p>
+            </div>
+            <!-- Platform Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 reveal">
+                <!-- GitHub -->
+                <a href="https://github.com/PreritXD" target="_blank" rel="noopener noreferrer"
+                    class="card-hover group relative flex flex-col justify-between h-[320px] p-10 border border-border-dark bg-bg-surface">
+                    <div class="flex justify-between items-start">
+                        <svg class="w-10 h-10 text-white fill-current group-hover:text-primary transition-colors"
+                            viewBox="0 0 24 24">
+                            <path fill-rule="evenodd"
+                                d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"
+                                clip-rule="evenodd" />
+                        </svg>
+                        <span
+                            class="material-symbols-outlined text-text-muted text-2xl -rotate-45 group-hover:rotate-0 group-hover:text-primary transition-all duration-300">arrow_outward</span>
+                    </div>
+                    <div class="flex flex-col gap-2">
+                        <span class="text-primary text-xs uppercase tracking-widest font-medium">GITHUB</span>
+                        <h2 class="text-white font-black text-3xl uppercase">@PreritXD</h2>
+                        <p class="text-text-muted text-sm">Source of truth. Every line of code.</p>
+                    </div>
+                    <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+                        style="background:linear-gradient(135deg,rgba(200,255,0,0.04),transparent)"></div>
+                </a>
+                <!-- Instagram -->
+                <a href="https://www.instagram.com/preritgujrati/" target="_blank" rel="noopener noreferrer"
+                    class="card-hover group relative flex flex-col justify-between h-[320px] p-10 border border-border-dark bg-bg-surface">
+                    <div class="flex justify-between items-start">
+                        <svg class="w-10 h-10 text-white fill-current group-hover:text-primary transition-colors"
+                            viewBox="0 0 24 24">
+                            <path
+                                d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+                        </svg>
+                        <span
+                            class="material-symbols-outlined text-text-muted text-2xl -rotate-45 group-hover:rotate-0 group-hover:text-primary transition-all duration-300">arrow_outward</span>
+                    </div>
+                    <div class="flex flex-col gap-2">
+                        <span class="text-primary text-xs uppercase tracking-widest font-medium">INSTAGRAM</span>
+                        <h2 class="text-white font-black text-3xl uppercase">@preritgujrati</h2>
+                        <p class="text-text-muted text-sm">Process, projects, and behind the scenes.</p>
+                    </div>
+                    <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+                        style="background:linear-gradient(135deg,rgba(200,255,0,0.04),transparent)"></div>
+                </a>
+            </div>
+            <!-- Contact CTA Band -->
+            <div
+                class="w-full bg-primary py-24 px-8 flex flex-col items-center text-center gap-8 relative overflow-hidden reveal">
+                <h2 class="text-bg-dark font-black uppercase leading-none tracking-[-0.04em]"
+                    style="font-size:clamp(48px,7vw,96px);">Have a project<br>in mind?</h2>
+                <p class="text-bg-dark/70 text-lg max-w-md">I'm always open to discussing new opportunities and creative
+                    ideas. Let's build something great.</p>
+                <a href="https://mail.google.com/mail/?view=cm&fs=1&to=workwithprerit1@gmail.com" target="_blank"
+                    rel="noopener noreferrer"
+                    class="flex items-center gap-2 bg-bg-dark text-primary px-10 py-4 text-sm font-bold uppercase tracking-widest hover:bg-black transition-colors">
+                    Contact me <span class="material-symbols-outlined">mail</span>
+                </a>
+            </div>
+        </div>
+        <!-- Footer -->
+        <footer
+            class="border-t border-border-dark px-12 py-10 flex justify-between items-center text-text-muted text-xs uppercase tracking-widest">
+            <span>PRERIT GUJRATI © 2025</span>
+            <div class="flex gap-8">
+                <a href="https://github.com/PreritXD" target="_blank" rel="noopener noreferrer"
+                    class="hover:text-primary transition-colors">GitHub</a>
+                <a href="https://www.instagram.com/preritgujrati/" target="_blank" rel="noopener noreferrer"
+                    class="hover:text-primary transition-colors">Instagram</a>
+            </div>
+        </footer>
+    </div>
+    <!-- ═══════════════════════════════════════ SCRIPTS ═══════════════════════════════════════ -->
+    <script>
+        // ── Custom Cursor ──
+        const cursor = document.getElementById('cursor');
+        document.addEventListener('mousemove', e => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+        });
+        // ── Navbar scroll effect ──
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            navbar.classList.toggle('scrolled', window.scrollY > 60);
+        });
+        // ── SPA Navigation ──
+        function navigate(page) {
+            // Hide all pages
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            // Show target page
+            const target = document.getElementById('page-' + page);
+            if (target) target.classList.add('active');
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            // Update hash
+            history.pushState(null, '', '#' + page);
+            // Update active nav link
+            document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active-link'));
+            const activeLink = document.getElementById('nav-' + page);
+            if (activeLink) activeLink.classList.add('active-link');
+            // Trigger reveal animations on new page
+            setTimeout(initReveal, 100);
+            // Update document title
+            const titles = { home: 'Prerit Gujrati — Full Stack Developer', projects: 'Projects — Prerit Gujrati', services: 'Services — Prerit Gujrati', social: 'Connect — Prerit Gujrati' };
+            document.title = titles[page] || titles.home;
+        }
+        // Handle back/forward browser navigation
+        window.addEventListener('popstate', () => {
+            const page = location.hash.replace('#', '') || 'home';
+            navigate(page);
+        });
+        // Load correct page on initial load
+        window.addEventListener('DOMContentLoaded', () => {
+            const page = location.hash.replace('#', '') || 'home';
+            navigate(page);
+        });
+        // ── Scroll Reveal ──
+        function initReveal() {
+            const els = document.querySelectorAll('.page.active .reveal');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry, i) => {
+                    if (entry.isIntersecting) {
+                        setTimeout(() => entry.target.classList.add('visible'), i * 80);
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+            els.forEach(el => observer.observe(el));
+        }
+        window.addEventListener('scroll', initReveal, { passive: true });
+        initReveal();
+    </script>
+</body>
+
+</html>
