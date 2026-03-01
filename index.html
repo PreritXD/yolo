@@ -310,19 +310,26 @@
                 <span class="pulse-dot"></span>
                 <span class="text-primary text-xs font-medium uppercase tracking-widest">Available for work</span>
             </div>
-            <button class="md:hidden text-white flex items-center justify-center p-1 hover:text-primary transition-colors" onclick="toggleMobileMenu()">
+            <button
+                class="md:hidden text-white flex items-center justify-center p-1 hover:text-primary transition-colors"
+                onclick="toggleMobileMenu()">
                 <span class="material-symbols-outlined text-3xl" id="mobile-menu-icon">menu</span>
             </button>
         </div>
     </header>
 
     <!-- Mobile Menu Overlay -->
-    <div id="mobile-menu" class="fixed inset-0 z-40 bg-bg-dark flex flex-col items-center justify-center gap-8 opacity-0 pointer-events-none transition-all duration-300">
-        <a href="#home" onclick="navigate('home')" class="text-4xl font-black uppercase text-white hover:text-primary transition-colors">Home</a>
-        <a href="#projects" onclick="navigate('projects')" class="text-4xl font-black uppercase text-white hover:text-primary transition-colors">Projects</a>
-        <a href="#services" onclick="navigate('services')" class="text-4xl font-black uppercase text-white hover:text-primary transition-colors">Services</a>
-        <a href="#social" onclick="navigate('social')" class="text-4xl font-black uppercase text-white hover:text-primary transition-colors">Social</a>
-        
+    <div id="mobile-menu"
+        class="fixed inset-0 z-40 bg-bg-dark flex flex-col items-center justify-center gap-8 opacity-0 pointer-events-none transition-all duration-300">
+        <a href="#home" onclick="navigate('home')"
+            class="text-4xl font-black uppercase text-white hover:text-primary transition-colors">Home</a>
+        <a href="#projects" onclick="navigate('projects')"
+            class="text-4xl font-black uppercase text-white hover:text-primary transition-colors">Projects</a>
+        <a href="#services" onclick="navigate('services')"
+            class="text-4xl font-black uppercase text-white hover:text-primary transition-colors">Services</a>
+        <a href="#social" onclick="navigate('social')"
+            class="text-4xl font-black uppercase text-white hover:text-primary transition-colors">Social</a>
+
         <div class="mt-8 flex sm:hidden items-center gap-2">
             <span class="pulse-dot"></span>
             <span class="text-primary text-xs font-medium uppercase tracking-widest">Available for work</span>
@@ -397,7 +404,7 @@
         <hr class="divider" />
         <!-- Journey Timeline -->
         <section class="max-w-[1280px] mx-auto px-12 py-24 reveal">
-            <p class="text-text-muted text-xs uppercase tracking-[0.15em] mb-16">01 — My Journey</p>
+            <p class="text-text-muted text-xs uppercase tracking-[0.15em] mb-16">01 —</p>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-20">
                 <div>
                     <h2 class="font-bold text-white leading-none tracking-[-0.03em]"
@@ -419,7 +426,7 @@
                             building next.</p>
                     </div>
                     <div class="relative">
-                        <div class="timeline-dot" style="background:var(--border-hover)"></div>
+
                         <span class="text-text-muted text-xs uppercase tracking-widest">Mid 2024</span>
                         <h3 class="text-white font-bold text-xl mt-2 mb-2">Going Beyond the Frontend</h3>
                         <p class="text-text-muted text-sm leading-[1.7]">I didn't stop at just frontend basics. I
@@ -431,7 +438,7 @@
                             simplicity, Java's structured approach, JavaScript's flexibility.</p>
                     </div>
                     <div class="relative">
-                        <div class="timeline-dot" style="background:var(--border-hover)"></div>
+
                         <span class="text-text-muted text-xs uppercase tracking-widest">Early 2024</span>
                         <h3 class="text-white font-bold text-xl mt-2 mb-2">The First Line of Code</h3>
                         <p class="text-text-muted text-sm leading-[1.7]">It started with a question: how are websites
@@ -499,110 +506,123 @@
                 <p class="text-primary text-xs font-bold tracking-[0.2em] uppercase mb-5">02 — Projects</p>
                 <h1 class="font-black text-white leading-none tracking-[-0.04em] mb-6"
                     style="font-size:clamp(56px,7vw,96px);">Work that<br>Speaks.</h1>
-                <p class="text-text-muted text-lg max-w-xl">Carefully chosen projects that reflect both creative thinking and technical strength, updated with the latest and most in-demand work.</p>
+                <p class="text-text-muted text-lg max-w-xl">Carefully chosen projects that reflect both creative
+                    thinking and technical strength, updated with the latest and most in-demand work.</p>
                 <hr class="divider mt-10" />
             </div>
-            <!-- Project 01 -->
-            <article class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center pb-20 mb-4 reveal">
-                <div class="lg:col-span-7 overflow-hidden">
-                    <div class="aspect-video overflow-hidden group">
-                        <img src="https://cdn.dribbble.com/userupload/15440250/file/original-49a0737d9084b38a4db1926dea60c323.jpg"
-                            alt="E-Commerce Platform"
-                            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+            <!-- Projects List -->
+            <div class="flex flex-col">
+                <!-- Project 01 -->
+                <div class="group py-16 border-b border-border-dark reveal">
+                    <div class="flex flex-col md:flex-row md:items-start justify-between gap-8">
+                        <div class="flex-1">
+                            <div class="flex items-center gap-6 mb-6">
+                                <span class="text-primary font-mono text-sm tracking-widest">01 / [ FULL STACK ]</span>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="tag">React</span><span class="tag">Node.js</span><span
+                                        class="tag">Stripe</span><span class="tag">MongoDB</span>
+                                </div>
+                            </div>
+                            <h2 class="text-white font-black uppercase tracking-tight mb-6 group-hover:text-primary transition-colors duration-300"
+                                style="font-size:clamp(32px,6vw,64px);">E-Commerce Platform</h2>
+                            <p class="text-text-muted text-lg max-w-2xl leading-relaxed">
+                                A production-ready solution featuring seamless payment integration, real-time inventory
+                                management, and a high-performance architecture capable of handling 10k+ concurrent
+                                users.
+                            </p>
+                        </div>
+                        <div class="md:pt-16">
+                            <a href="https://preritxd.github.io/BEAN-HAVEN/" target="_blank" rel="noopener noreferrer"
+                                class="ghost-link text-sm font-bold flex items-center gap-2 group-hover:text-primary transition-colors">
+                                EXPLORE PROJECT <span class="material-symbols-outlined text-base">arrow_outward</span>
+                            </a>
+                        </div>
                     </div>
                 </div>
-                <div class="lg:col-span-5 flex flex-col gap-5">
-                    <span class="text-primary font-mono text-xl">01.</span>
-                    <h2 class="text-white font-bold" style="font-size:clamp(24px,3vw,36px);">E-Commerce Platform</h2>
-                    <p class="text-text-muted leading-[1.7]">A full-stack solution with React and Node.js, featuring
-                        seamless payment integration and real-time inventory management. Handles 10k+ concurrent users.
-                    </p>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="tag">React</span><span class="tag">Node.js</span><span
-                            class="tag">Stripe</span><span class="tag">MongoDB</span>
-                    </div>
-                    <a href="https://preritxd.github.io/BEAN-HAVEN/" target="_blank" rel="noopener noreferrer"
-                        class="ghost-link text-sm font-bold w-fit flex items-center gap-1">View Project <span
-                            class="material-symbols-outlined text-base">arrow_forward</span></a>
-                </div>
-            </article>
-            <hr class="divider mb-20" />
-            <!-- Project 02 (reversed) -->
-            <article class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center pb-20 mb-4 reveal">
-                <div class="lg:col-span-5 flex flex-col gap-5 order-2 lg:order-1">
-                    <span class="text-primary font-mono text-xl">02.</span>
-                    <h2 class="text-white font-bold" style="font-size:clamp(24px,3vw,36px);">Portfolio V1</h2>
-                    <p class="text-text-muted leading-[1.7]">Minimalist personal website focusing on typography and
-                        motion, using WebGL for immersive background effects. A digital identity that feels technical
-                        and artistic.</p>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="tag">Vue.js</span><span class="tag">Three.js</span><span
-                            class="tag">GSAP</span><span class="tag">WebGL</span>
-                    </div>
-                    <a href="https://kinetic-type-space.vercel.app/" target="_blank" rel="noopener noreferrer"
-                        class="ghost-link text-sm font-bold w-fit flex items-center gap-1">View Project <span
-                            class="material-symbols-outlined text-base">arrow_forward</span></a>
-                </div>
-                <div class="lg:col-span-7 overflow-hidden order-1 lg:order-2">
-                    <div class="aspect-video overflow-hidden group">
-                        <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBn8BpHry3_cJ7M2yPkTd6k6vlkzUzP7h9lq1_u2F0rXAflDsR20vvcTFD4OBml1Inxe6_LHBzlFGsG6QXlCwdox0usH23_tkzGCUKZ-BTqhznmpoByiUGNSqKxa8z-KvCodsbIPGpG9Wm6QvE9-rCzqDVT6igGI3ayw_U3ILI-mOZsYRFnm2cyof1qzVOyzxpflCQschU0lrDI8bCMHJbeMu_TdhrI7wiA9NUuXpDGrHuSwrmeGNVBymJg3JTbhw4eSWIDwp5y9Ys2"
-                            alt="Portfolio V1"
-                            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
-                    </div>
-                </div>
-            </article>
-            <hr class="divider mb-20" />
-            <!-- Project 03 -->
-            <article class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center pb-20 mb-4 reveal">
-                <div class="lg:col-span-7 overflow-hidden">
-                    <div class="aspect-video overflow-hidden group">
-                        <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuD9wH9v8s662j6c0Tg0xB9bl-amahhPviEvNDhj1c1wdSQui9-bEY7MCFGQGewaFxtcvoFpSUtKZPryz3EHmpmDL6Mjd26_FM9q9gNIA-GVJaKu6qWx8SvlNpaCmRdvdkgg8W2y70QIJcC5A5WPLAy2pXOg4rUWIWEfmygNlWRu2FJkoFe_RdwBI9pOalUmS3u_nZukYB7vF0YfVTnr26JnC8g2fK8-R3wGwFwBHcNm2n2CuKIpxlxL3Yp4AHl7IFTN8pXEVY4OgWah"
-                            alt="Fintech Dashboard"
-                            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
-                    </div>
-                </div>
-                <div class="lg:col-span-5 flex flex-col gap-5">
-                    <span class="text-primary font-mono text-xl">03.</span>
-                    <h2 class="text-white font-bold" style="font-size:clamp(24px,3vw,36px);">Fintech Dashboard</h2>
-                    <p class="text-text-muted leading-[1.7]">High-performance data visualization dashboard for financial
-                        analysts. Complex charting with socket-based live data updates for real-time market tracking.
-                    </p>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="tag">Next.js</span><span class="tag">D3.js</span><span
-                            class="tag">TypeScript</span><span class="tag">WebSockets</span>
-                    </div>
-                    <a href="https://preritxd.github.io/neomorph/" target="_blank" rel="noopener noreferrer"
-                        class="ghost-link text-sm font-bold w-fit flex items-center gap-1">View Project <span
-                            class="material-symbols-outlined text-base">arrow_forward</span></a>
-                </div>
-            </article>
-            <hr class="divider mb-20" />
-            <!-- Project 04 (reversed) -->
-            <article class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center reveal">
-                <div class="lg:col-span-5 flex flex-col gap-5 order-2 lg:order-1">
-                    <span class="text-primary font-mono text-xl">04.</span>
-                    <h2 class="text-white font-bold" style="font-size:clamp(24px,3vw,36px);">Gesture Controlled
-                        Particles</h2>
-                    <p class="text-text-muted leading-[1.7]">Experimental Gesture Controlled Holographic Particles. Made
-                        using Python, TypeScript and React.
 
-                    </p>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="tag">Python</span><span class="tag">FastAPI</span><span
-                            class="tag">React</span><span class="tag">Tailwind</span>
+                <!-- Project 02 -->
+                <div class="group py-16 border-b border-border-dark reveal">
+                    <div class="flex flex-col md:flex-row md:items-start justify-between gap-8">
+                        <div class="flex-1">
+                            <div class="flex items-center gap-6 mb-6">
+                                <span class="text-primary font-mono text-sm tracking-widest">02 / [ INTERACTIVE ]</span>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="tag">Vue.js</span><span class="tag">Three.js</span><span
+                                        class="tag">GSAP</span><span class="tag">WebGL</span>
+                                </div>
+                            </div>
+                            <h2 class="text-white font-black uppercase tracking-tight mb-6 group-hover:text-primary transition-colors duration-300"
+                                style="font-size:clamp(32px,6vw,64px);">Portfolio V1</h2>
+                            <p class="text-text-muted text-lg max-w-2xl leading-relaxed">
+                                A minimalist experimental website focusing on typography-driven motion and immersive
+                                WebGL background effects. A digital identity where technical depth meets artistic
+                                intent.
+                            </p>
+                        </div>
+                        <div class="md:pt-16">
+                            <a href="https://kinetic-type-space.vercel.app/" target="_blank" rel="noopener noreferrer"
+                                class="ghost-link text-sm font-bold flex items-center gap-2 group-hover:text-primary transition-colors">
+                                EXPLORE PROJECT <span class="material-symbols-outlined text-base">arrow_outward</span>
+                            </a>
+                        </div>
                     </div>
-                    <a href="https://preritxd.github.io/hand-particles/" target="_blank" rel="noopener noreferrer"
-                        class="ghost-link text-sm font-bold w-fit flex items-center gap-1">View Project <span
-                            class="material-symbols-outlined text-base">arrow_forward</span></a>
                 </div>
-                <div class="lg:col-span-7 overflow-hidden order-1 lg:order-2">
-                    <div class="aspect-video overflow-hidden group">
-                        <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBQd1attYuNgU0zCTlTJLiMw3b3WlOO2cR73_pLhqyuF30GgQIC5GY3qr5Oy7xh81DXpVgtZAG9Sz5D_FOjFUIcDGr1ka4m6j6_kO2sDpi0Pc1Nw8LGPHnveZsRxqnL5RUzTwSry2FJnU0Jhj0egkwqIuixNh14WqWRKEg-RmM6JS5XfYA_asjKi1vhVYSAZ36qzB1Mtukoes0W7E6OrZp5XFTSzmuv7_9jrFr_HSEJq8mO_R7SLw8m8wC90XCyii2P7IWfzRLqh7UA"
-                            alt="Gesture Controlled hand-particles"
-                            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+
+                <!-- Project 03 -->
+                <div class="group py-16 border-b border-border-dark reveal">
+                    <div class="flex flex-col md:flex-row md:items-start justify-between gap-8">
+                        <div class="flex-1">
+                            <div class="flex items-center gap-6 mb-6">
+                                <span class="text-primary font-mono text-sm tracking-widest">03 / [ FINTECH ]</span>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="tag">Next.js</span><span class="tag">D3.js</span><span
+                                        class="tag">TypeScript</span><span class="tag">WebSockets</span>
+                                </div>
+                            </div>
+                            <h2 class="text-white font-black uppercase tracking-tight mb-6 group-hover:text-primary transition-colors duration-300"
+                                style="font-size:clamp(32px,6vw,64px);">Fintech Dashboard</h2>
+                            <p class="text-text-muted text-lg max-w-2xl leading-relaxed">
+                                High-performance data visualization for financial analysts. Complex charting systems
+                                with socket-based live data updates for real-time market tracking and analysis.
+                            </p>
+                        </div>
+                        <div class="md:pt-16">
+                            <a href="https://preritxd.github.io/neomorph/" target="_blank" rel="noopener noreferrer"
+                                class="ghost-link text-sm font-bold flex items-center gap-2 group-hover:text-primary transition-colors">
+                                EXPLORE PROJECT <span class="material-symbols-outlined text-base">arrow_outward</span>
+                            </a>
+                        </div>
                     </div>
                 </div>
-            </article>
+
+                <!-- Project 04 -->
+                <div class="group py-16 border-b border-border-dark reveal">
+                    <div class="flex flex-col md:flex-row md:items-start justify-between gap-8">
+                        <div class="flex-1">
+                            <div class="flex items-center gap-6 mb-6">
+                                <span class="text-primary font-mono text-sm tracking-widest">04 / [ AI & ML ]</span>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="tag">Python</span><span class="tag">FastAPI</span><span
+                                        class="tag">React</span><span class="tag">Tailwind</span>
+                                </div>
+                            </div>
+                            <h2 class="text-white font-black uppercase tracking-tight mb-6 group-hover:text-primary transition-colors duration-300"
+                                style="font-size:clamp(32px,6vw,64px);">Gesture Particles</h2>
+                            <p class="text-text-muted text-lg max-w-2xl leading-relaxed">
+                                Experimental gesture-controlled holographic particles. An exploration of computer vision
+                                and interactive frontend systems merging Python backends with React interfaces.
+                            </p>
+                        </div>
+                        <div class="md:pt-16">
+                            <a href="https://preritxd.github.io/hand-particles/" target="_blank"
+                                rel="noopener noreferrer"
+                                class="ghost-link text-sm font-bold flex items-center gap-2 group-hover:text-primary transition-colors">
+                                EXPLORE PROJECT <span class="material-symbols-outlined text-base">arrow_outward</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
         <!-- Footer -->
         <footer
@@ -948,7 +968,7 @@
             const menu = document.getElementById('mobile-menu');
             const icon = document.getElementById('mobile-menu-icon');
             const isOpen = menu.classList.contains('opacity-100');
-            
+
             if (isOpen) {
                 // Close menu
                 menu.classList.remove('opacity-100', 'pointer-events-auto');
